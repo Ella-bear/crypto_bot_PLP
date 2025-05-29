@@ -49,7 +49,7 @@ def respond_to_query(user_query):
         else:
             return "🤔 I couldn't find a good option for long-term investment based on the data I have."
         
-    elif "Available coins" in user_query or "list all coins available" in user_query:
+    elif "available coins" in user_query or "list all coins available" in user_query:
         # List all available coins
         available_coins = ", ".join(crypto_db.keys())
         return f"💰 Available coins: {available_coins}. You can ask about their trends, sustainability, or long-term growth potential. 📊"
@@ -58,6 +58,13 @@ def respond_to_query(user_query):
 
         # Always return the same message for any definition request
         return "❓ Sorry, I couldn't find any defenition for that. Please ask about sustainability, trends, or long-term growth. 🤖"
+    
+    elif "energy use" in user_query or "energy consumption" in user_query:
+        results = [f"{coin}: {crypto_db[coin]['energy_use']}" for coin in crypto_db]
+        return "⚡ Energy use by coin:\n" + "\n".join(results)
+
+    elif "add coin" in user_query:
+        return "🛠️ Sorry, adding new coins is not supported yet."
 
 # 3. Run chatbot interaction
 print("👋 Hi, I’m CryptoBot, your crypto advisor! 🤖")
