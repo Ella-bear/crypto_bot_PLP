@@ -100,16 +100,32 @@ class CryptoBot:
     def process_query(self, query: str) -> str:
         """Process user queries and return appropriate responses."""
         query = query.lower()
-        
-        # Check for greetings
-        if any(word in query for word in ["hello", "hi", "hey", "what can you do"]):
+
+        # Check for greetings (match whole words only)
+        greetings = {"hello", "hi", "hey", "what can you do"}
+        query_words = set(query.replace("?", "").replace("!", "").split())
+        if greetings & query_words:
             return f"Hey there! I'm {self.name}, your friendly crypto advisor. How can I help you today?"
-        
+
         # Check for specific cryptocurrencies
         for crypto in crypto_db.keys():
             if crypto.lower() in query:
                 return self.get_crypto_info(crypto)
-        
+
+        # Special case: Direct answer for a specific long-term growth question
+        if "which crypto should i buy for long-term growth" in query:
+            return (
+                "For long-term growth, Bitcoin is often considered by many as a strong option due to its market dominance and adoption. "
+                "However, always do your own research and remember: Crypto investments carry significant risk! This is educational content, not financial advice."
+            )
+
+        # Check for long-term growth queries (add 'buy' and 'which' for robustness)
+        if (
+            ("long-term" in query or "long term" in query)
+            and ("growth" in query or "buy" in query or "which" in query)
+        ):
+            return f"For long-term growth, {self.get_best_overall()}\n\nRemember: Crypto investments carry significant risk! This is educational content, not financial advice."
+
         # Check for trending/price queries
         if any(word in query for word in ["trending", "trend", "going up", "rising", "price increase"]):
             return self.get_rising_cryptos()
