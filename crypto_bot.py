@@ -60,13 +60,13 @@ def respond_to_query(user_query):
         return "❓ Sorry, I couldn't find any defenition for that. Please ask about sustainability, trends, or long-term growth. 🤖"
 
 # 3. Run chatbot interaction
-print("👋 Hi, I’m CryptoBuddy, your crypto advisor! 🤖")
+print("👋 Hi, I’m CryptoBot, your crypto advisor! 🤖")
 print("You can ask me things like: 'Which crypto is trending up?' or 'What’s the most sustainable coin?'\n")
 
 while True:
     user_input = input("You: ")
     if user_input.lower() in ['exit', 'quit']:
-        print("CryptoBuddy: Goodbye! Remember to always research before you invest.")
+        print("CryptoBot: Goodbye! Remember to always research before you invest.")
         break
     response = respond_to_query(user_input)
-    print("CryptoBuddy:", response)
+    print("CryptoBot:", response)
